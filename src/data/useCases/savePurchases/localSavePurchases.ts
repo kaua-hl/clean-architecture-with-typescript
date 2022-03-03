@@ -1,10 +1,11 @@
 import { CacheStore } from "@/data/protocols/cache";
+import { SavePurchases } from "@/domain";
 
-export class LocalSavePurchases {
-  constructor(private readonly cacheStore: CacheStore) {}
+export class LocalSavePurchases implements SavePurchases {
+  constructor(private readonly cacheStore: CacheStore<any>) {}
 
-  async save(): Promise<void> {
+  async save(purchases: Array<SavePurchases.Params>): Promise<void> {
     this.cacheStore.delete("purchases");
-    this.cacheStore.insert("purchases");
+    this.cacheStore.insert("purchases", purchases);
   }
 }
